@@ -23,7 +23,7 @@ if (rsvpForm) {
 
         const formData = new FormData(rsvpForm);
 
-        fetch('https://formsubmit.co/ajax/vita_or@mail.ru', {
+        fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             body: formData,
             headers: {
