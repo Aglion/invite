@@ -701,11 +701,12 @@ img {
     box-shadow: 0 10px 30px rgba(91, 139, 168, 0.4);
 }
 
-.success-message {
+.rsvp-section .success-message {
     display: none;
     text-align: center;
     padding: 50px 30px;
     background: var(--white);
+    color: var(--text-color);
     border-radius: 20px;
     margin-top: 30px;
     max-width: 600px;
@@ -714,19 +715,19 @@ img {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
-.success-message.show {
+.rsvp-section .success-message.show {
     display: block;
     animation: slideIn 0.5s ease;
 }
 
-.success-message h3 {
+.rsvp-section .success-message h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(1.5rem, 4vw, 2rem);
     color: var(--primary-color);
     margin-bottom: 12px;
 }
 
-.success-message p {
+.rsvp-section .success-message p {
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     color: var(--text-color);
     line-height: 1.7;
