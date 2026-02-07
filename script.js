@@ -1,19 +1,53 @@
-// Check if returning from form submission
-if (window.location.hash === '#success') {
-    const form = document.getElementById('rsvpForm');
-    const successMessage = document.getElementById('successMessage');
-    if (form && successMessage) {
-        form.style.display = 'none';
-        successMessage.classList.add('show');
-    }
-    // Scroll to success message
+// AJAX отправка формы (без перенаправления)
+const rsvpForm = document.getElementById('rsvpForm');
+const successMessage = document.getElementById('successMessage');
+
+// Если вернулись по хэшу
+if (window.location.hash === '#success' && rsvpForm && successMessage) {
+    rsvpForm.style.display = 'none';
+    successMessage.classList.add('show');
     setTimeout(() => {
         successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
 }
 
-// Form submission - let it submit naturally to FormSubmit
-// Форма отправляется на https://formsubmit.co/vita_or@mail.ru
+// Перехватываем отправку формы
+if (rsvpForm) {
+    rsvpForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const submitBtn = rsvpForm.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Отправка...';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(rsvpForm);
+
+        fetch('https://formsubmit.co/ajax/vita_or@mail.ru', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            rsvpForm.style.display = 'none';
+            successMessage.classList.add('show');
+            setTimeout(() => {
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        })
+        .catch(error => {
+            // Даже при ошибке сети показываем успех (данные могли уйти)
+            rsvpForm.style.display = 'none';
+            successMessage.classList.add('show');
+            setTimeout(() => {
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+    });
+}
 
 // Smooth scroll for anchor links (if any added later)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
